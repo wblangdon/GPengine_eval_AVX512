@@ -1,0 +1,102 @@
+#Magpie scenario file for gem5 $Revision: 1.22 $
+
+#Modifications:
+#WBL 18 Nov 2025 Remove code not used by regtype8
+#WBL 13 Nov 2025 Allow tuning regtype, add eval_diffs.cpp.xml
+#WBL  7 Nov 2025 For new Magpie make output simplier
+#WBL  5 Nov 2025 For avx512 transplant
+#WBL 13 Oct 2025 Switch to eval
+#WBL 10 Oct 2025 Add diffs.cpp.xml, increase max_steps
+#    combine div_funcs.cpp with div.cpp
+#WBL  9 Oct 2025 Add div_funcs.cpp.xml IntrinsicsGuide.cpp.xml
+#WBL  1 Oct 2025 based on 2025 May 19 07:53 malloc.txt, avx.txt r1.3
+
+#Documentation:
+#https://github.com/bloa/magpie/blob/master/docs/reference/scenario.md
+
+[magpie]
+show_cmd_progress = False
+#default_timeout = 1200
+#default_output = 1e6
+
+[magpie.log]
+color_output = False
+
+#from tsd.txt r1.3
+[srcml]
+#from minisat_runtime_xml1.txt
+rename =
+    stmt: break continue decl_stmt do expr_stmt for goto if return switch while
+#from minisat_runtime_xml2.txt
+#5 Nov 2025 google AI says rename all instances of a <literal_number> tag in the XML representation of the source code to a simpler <number> tag.
+#It seems our XML has instances of literal_number, without rename Magpie fails with
+#  RuntimeError: Unable to create an edit of class XmlNodeReplacementTemplatedEdit<number>
+#rename =
+    number: literal_number
+#xml combined
+focus = block stmt operator_comp operator_arith number
+#internodes = block
+internodes = 
+process_pseudo_blocks = False
+process_literals = True
+process_operators = True
+
+[software]
+path = examples/code/avx
+target_files =
+#   avx.params
+    eval.cpp.xml
+#   div.cpp.xml
+#   div_funcs.cpp.xml
+ingredient_files = 
+    eval_diffs.cpp.xml
+    diffs.cpp.xml
+    IntrinsicsGuide.cpp.xml
+#fitness = perf_instructions
+fitness = output
+
+compile_cmd = tcsh ./compile.bat
+test_cmd = 
+run_cmd  = tcsh ./fit.bat
+#run_timeout = 1200
+
+
+[search]
+#max_steps = 1
+#max_steps = 1000
+max_steps = 100000
+possible_edits =
+#    line edits operate on eval.cpp diffs.cpp IntrinsicsGuide.cpp (not .xml)
+#    LineDeletion
+#    LineInsertion
+#    LineReplacement
+    SrcmlArithmeticOperatorSetting
+    SrcmlComparisonOperatorSetting
+    SrcmlNumericSetting
+    SrcmlRelativeNumericSetting
+    SrcmlStmtDeletion
+    SrcmlStmtInsertion
+    SrcmlStmtReplacement
+#no XML line nodes (see line mode above)
+#Gives Unable to create an edit of class XmlNodeDeletionTemplatedEdit<line>
+#   XmlNodeDeletion<line>
+#XmlLineReplacement = XmlNodeReplacement<line>
+#Aymeric's email 6 Nov 2025 need condition in focus BUT
+#  XML FOR&IF not interoperable withour hacking xml
+#    SrcmlConditionReplacement = XmlNodeReplacement<condition>
+#get RuntimeError: SrcmlExprReplacementEdit
+#if add condition to focus get compilation error
+#
+#if add expr to focus can use XmlNodeReplacement<expr> but gives many compilation errors
+#   XmlNodeReplacement<expr>
+#
+#XmlTextSetting<number... and XmlNodeReplacement<number> seem to overlap
+#    XmlTextSetting<number,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,63,64,127,128,255,256>
+#
+    XmlNodeDeletion<stmt>
+    XmlNodeInsertion<stmt,block>
+    XmlNodeReplacement<stmt>
+    XmlNodeReplacement<number>
+#from tsd.txt r1.3
+#   StmtMoving emailed aymeric as rejected 7 Oct 2025
+#   ParamSetting
