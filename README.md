@@ -8,6 +8,9 @@ Asummes new GCC g++ compiler (here 11.5.0) Assumes new Python (here 3.11.5) AVX 
 
 It is recommened that you create examples/avx_extra to hold the development versions of the files in the examples/avx directory.
 
+For simplicity duplicate directories are privided (32) for 8,16,32 bit experiments and for only 8-bit registers (the second experiment, which is the default).
+If you wish to run the first more complicated experiment, adjust run.bat to use scenario32 etc.
+
 TODO....
 This work will be presented at GI@ICSE 2026, 12 April, Rio (Brazil) https://geneticimprovementofsoftware.com/events/icse2026
 
