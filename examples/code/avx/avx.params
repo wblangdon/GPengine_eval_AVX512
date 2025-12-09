@@ -1,0 +1,10 @@
+#WBL 10 November 2025
+#Based on Nov  5 2025 ./minisat/minisat_simplified.params
+#and rnafold_extras/gcc.params r1.12
+
+TIMING="compile"
+CLI_PREFIX = ""
+CLI_GLUE = ""
+#CLI_BOOLEAN = "prefix"
+
+regsize {8,16,32}[8]
