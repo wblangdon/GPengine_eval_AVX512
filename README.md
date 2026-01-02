@@ -43,7 +43,8 @@ and also run pre_compile.bat in examples/code/avx32 to create eval_perf_8.o and 
                  local search reliably sped up 114 or 310 lines of
                  manually written parallel SIMD code for the Intel
                  Advanced Vector Extensions (AVX) by 2 percent.",
-  notes =        "new 512bit version of \cite{langdon:2026:GI}",
+  notes =        "new 512bit version of \cite{langdon:2026:GI}
+                 Used in \cite{Langdon:2026:raLGP}",
 }
 ```
 
