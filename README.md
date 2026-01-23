@@ -2,16 +2,20 @@ Example of using Magpie to speedup the performance critical interpret of GPengin
 
 The C++ interpreter's eval function has been extracted from GPengine and modified to operator on 64 test cases simultaneously using Intel's 512 bit AVX instruction set.
 
-Speedup is measured by Linux' perf instruction count. Which Magpie's local search tries to minify.
+Speedup is measured by Linux' perf instruction count. Which Magpie's local search tries to reduce.
 
-Asummes new GCC g++ compiler (here 11.5.0) Assumes new Python (here 3.11.5) AVX instruction set (your hardware must support at least -march=skylake-avx512). Assumes Magpie (5 Nov 2025) https://github.com/bloa/magpie
+Assumes new GCC g++ compiler (here 11.5.0).
+Assumes new Python (here 3.11.5).
+AVX instruction set (your hardware must support at least -march=skylake-avx512). 
+(If you do not have AVX 512 but do have SSE 256, please consider https://github.com/wblangdon/GPengine_eval_SSE256 ).
+Assumes Magpie (5 Nov 2025) https://github.com/bloa/magpie
 
 It is recommened that you create examples/avx_extra to hold the development versions of the files in the examples/avx directory.
 
 For simplicity duplicate directories are provided (32) for 8,16,32 bit experiments and for only 8-bit registers (the second experiment, which is the default).
 If you wish to run the first more complicated experiment, adjust run.bat to use scenario32 etc.
 and also run pre_compile.bat in examples/code/avx32 to create eval_perf_8.o and eval_h_8.o
-(This step is also needed if you are not using g++ 11.5.0
+(This step is also needed if you are not using g++ 11.5.0.)
 
 ```
 @Misc{langdon:2025:eval_avx512,
@@ -48,18 +52,18 @@ and also run pre_compile.bat in examples/code/avx32 to create eval_perf_8.o and 
 }
 ```
 
-TODO....
-This work will be presented at GI@ICSE 2026, 12 April, Rio (Brazil) https://geneticimprovementofsoftware.com/events/icse2026
-
-@InProceedings{Langdon:2026:GI,
+This work will be presented at GI@ICSE 2026, 13 April, Rio (Brazil) https://geneticimprovementofsoftware.com/events/icse2026
+```
+@InProceedings{langdon:2026:GI,
     author = "William B. Langdon and Carol Hanna",
     title = "Improving a Parallel {C++ Intel SSE SIMD} Linear Genetic Programming Interpreter",
     booktitle = "15th International Workshop on Genetic Improvement @ICSE 2026",
     year = "2026",
     editor = "Aymeric Blot and Oliver Krauss",
     address = "Rio de Janeiro",
-    month = "12 April",
-    url = {https://geneticimprovementofsoftware.com/events/icse2026},
-    code_url = "https://github.com/wblangdon/rand_malloc",
+    month = "13 " # apr,
+    url = "http://gpbib.cs.ucl.ac.uk/gi2026/langdon_2026_GI.pdf",
     size = "8 pages",
 }
+```
+
