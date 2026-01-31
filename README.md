@@ -1,4 +1,4 @@
-Example of using Magpie to speedup the performance critical interpret of GPengine (Peter Nordin's) linear genetic programming system. Here set up with just the usual four arithmetic operations (+ - times and protected division) operating on unsigned char data types for extended evolution on the Mackey-Glass chaotic time series.
+Example of using Magpie to speedup the performance critical interpret of [GPengine](https://github.com/wblangdon/GPengine) (Peter Nordin's) linear genetic programming system. Here set up with just the usual four arithmetic operations (+ - times and protected division) operating on unsigned char data types for extended evolution on the Mackey-Glass chaotic time series.
 
 The C++ interpreter's eval function has been extracted from GPengine and modified to operator on 64 test cases simultaneously using Intel's 512 bit AVX instruction set.
 
